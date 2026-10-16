@@ -1,0 +1,22 @@
+{
+  "last_updated_at": "2026-10-16T10:00:00+05:30",
+  "trains": [
+    {
+      "train_number": "12951",
+      "train_name": "Sample Rajdhani",
+      "from_station_code": "NDLS",
+      "to_station_code": "BPL",
+      "departure": "2026-10-17T16:35:00+05:30",
+      "arrival": "2026-10-18T02:35:00+05:30",
+      "duration_minutes": 600,
+      "classes": [
+        { "travel_class": "SL", "status_text": "AVAILABLE-0042", "fare_rupees": 740 },
+        { "travel_class": "3A", "status_text": "GNWL 14/WL 9", "fare_rupees": 1980 },
+        { "travel_class": "2A", "status_text": "RAC 6" },
+        { "travel_class": "CC", "status_text": "REGRET" },
+        { "travel_class": "EC" }
+      ]
+    },
+    { "train_name": "Entry without a train number is dropped" }
+  ]
+}

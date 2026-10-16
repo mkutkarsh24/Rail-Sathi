@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Train body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,30 L70,30 Q76,30 76,36 L76,64 Q76,70 70,70 L38,70 Q32,70 32,64 L32,36 Q32,30 38,30 Z" />
+    <!-- Windscreen -->
+    <path
+        android:fillColor="#1A4D8F"
+        android:pathData="M39,36 L69,36 Q71,36 71,38 L71,50 Q71,52 69,52 L39,52 Q37,52 37,50 L37,38 Q37,36 39,36 Z" />
+    <!-- Headlights -->
+    <path
+        android:fillColor="#E07B00"
+        android:pathData="M42,60 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <path
+        android:fillColor="#E07B00"
+        android:pathData="M66,60 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+    <!-- Rails -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M34,76 L74,76 L74,79 L34,79 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,72 L44,72 L40,84 L36,84 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M64,72 L68,72 L72,84 L68,84 Z" />
+</vector>

@@ -1,0 +1,10 @@
+{
+  "train_number": "12951",
+  "status_text": "  ",
+  "delay_minutes": null,
+  "last_updated_at": "not-a-timestamp",
+  "stops": [
+    { "state": "PASSED" },
+    { "station_code": "AGC", "state": "something-new" }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "train_number": "12951",
+  "train_name": "Sample Rajdhani",
+  "journey_date": "2026-10-20",
+  "boarding_station": "NDLS",
+  "destination_station": "BPL",
+  "travel_class": "3A",
+  "chart_prepared": false,
+  "last_updated_at": "2026-10-16T10:00:00+05:30",
+  "passengers": [
+    { "serial": 1, "booking_status": "CNF/B2/21", "current_status": "CNF", "coach": "B2", "berth": "21" },
+    { "serial": 2, "booking_status": "WL 3", "current_status": "RAC 11" }
+  ]
+}

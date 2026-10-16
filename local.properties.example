@@ -1,0 +1,15 @@
+## Copy this file to local.properties (which is git-ignored) and edit.
+## Android Studio normally creates local.properties for you with sdk.dir.
+# sdk.dir=/path/to/Android/Sdk
+
+## Base URL of the railway data backend you operate or have access to.
+## MUST start with https://. Leave blank for clearly-labelled SAMPLE-DATA mode.
+## Do NOT put privileged provider secrets here: anything in the APK can be extracted.
+## See docs/PROVIDER_SETUP.md.
+RAIL_API_BASE_URL=
+
+## Release signing (only needed for `./gradlew :app:bundleRelease`). See docs/RELEASE_AAB.md.
+# RELEASE_STORE_FILE=/absolute/path/to/railsathi-upload.jks
+# RELEASE_STORE_PASSWORD=
+# RELEASE_KEY_ALIAS=
+# RELEASE_KEY_PASSWORD=
