@@ -24,6 +24,7 @@ import com.railsathi.app.ui.availability.AvailabilityViewModel
 import com.railsathi.app.ui.home.HomeViewModel
 import com.railsathi.app.ui.pnr.PnrViewModel
 import com.railsathi.app.ui.runningstatus.RunningStatusViewModel
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
@@ -358,6 +359,36 @@ class ViewModelTests {
         vm.onQueryChange("rajdhani")
         vm.onSearchSubmit { }
         assertEquals(ErrorType.NETWORK, vm.uiState.value.search.error?.type)
+    }
+
+    @Test
+    fun home_editingQueryWhileSearching_dropsTheInFlightSearch() = runTest {
+        val gate = CompletableDeferred<Unit>()
+        api.searchGate = gate
+        val vm = homeVmWithSubscriber()
+        vm.onQueryChange("rajdhani")
+        vm.onSearchSubmit { }
+        assertTrue(vm.uiState.value.search.isSearching)
+
+        vm.onQueryChange("howrah")
+        gate.complete(Unit) // the old search finishes after the text changed
+
+        val search = vm.uiState.value.search
+        assertFalse(search.isSearching)
+        assertNull(search.results) // results for "rajdhani" must not appear under "howrah"
+        assertEquals("howrah", search.query)
+    }
+
+    @Test
+    fun home_oneLetterNameQuery_isAFieldError_notASearchFailure() = runTest {
+        val vm = homeVmWithSubscriber()
+        vm.onQueryChange("r")
+        vm.onSearchSubmit { }
+
+        val search = vm.uiState.value.search
+        assertNotNull(search.queryError)
+        assertNull(search.error)
+        assertFalse(search.isSearching)
     }
 
     @Test

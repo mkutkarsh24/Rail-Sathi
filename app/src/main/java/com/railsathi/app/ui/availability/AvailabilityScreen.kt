@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
@@ -197,7 +197,10 @@ private fun androidx.compose.foundation.lazy.LazyListScope.resultItems(result: A
             )
         }
     } else {
-        items(result.trains, key = { it.train.number }) { TrainAvailabilityCard(it) }
+        // Index in the key so a provider repeating a train number can't crash the list.
+        itemsIndexed(result.trains, key = { index, item -> "${item.train.number}_$index" }) { _, item ->
+            TrainAvailabilityCard(item)
+        }
     }
 }
 

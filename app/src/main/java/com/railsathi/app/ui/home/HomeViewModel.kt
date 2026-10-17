@@ -72,7 +72,12 @@ class HomeViewModel @Inject constructor(
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeUiState())
 
     fun onQueryChange(value: String) {
-        searchState.update { it.copy(query = value, queryError = null, results = null, error = null) }
+        // A search still in flight belongs to the old text. Cancel it so it can neither leave the
+        // spinner stuck nor land its results under a query the user has since changed.
+        searchJob?.cancel()
+        searchState.update {
+            it.copy(query = value, queryError = null, isSearching = false, results = null, error = null)
+        }
     }
 
     /**
@@ -90,6 +95,14 @@ class HomeViewModel @Inject constructor(
                 onOpenTrain(query)
             } else {
                 searchState.update { it.copy(queryError = "Train numbers have 5 digits.") }
+            }
+            return
+        }
+        if (query.length < SearchTrainsUseCase.MIN_QUERY_LENGTH) {
+            // Input problem, not a failed search: show it under the field instead of an error
+            // card with a Retry button that could only fail the same way.
+            searchState.update {
+                it.copy(queryError = "Type at least ${SearchTrainsUseCase.MIN_QUERY_LENGTH} characters.")
             }
             return
         }

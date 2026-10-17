@@ -21,6 +21,7 @@ import com.railsathi.app.domain.repository.SavedTrainsRepository
 import com.railsathi.app.util.TimeProvider
 import java.io.IOException
 import java.time.LocalDate
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -70,6 +71,9 @@ class FakeRailApi : RailApi {
     var runningStatusCalls = 0
     var lastPnrRequest: PnrRequestDto? = null
 
+    /** When set, [searchTrains] suspends until it completes, so tests can hold a search in flight. */
+    var searchGate: CompletableDeferred<Unit>? = null
+
     override suspend fun getRunningStatus(trainNumber: String, date: String): RunningStatusDto {
         runningStatusCalls++
         return runningStatusResult.getOrThrow()
@@ -88,7 +92,10 @@ class FakeRailApi : RailApi {
         return pnrResult.getOrThrow()
     }
 
-    override suspend fun searchTrains(query: String): TrainSearchResponseDto = searchResult.getOrThrow()
+    override suspend fun searchTrains(query: String): TrainSearchResponseDto {
+        searchGate?.await()
+        return searchResult.getOrThrow()
+    }
 }
 
 class FakeCachedTrainStatusDao : CachedTrainStatusDao {

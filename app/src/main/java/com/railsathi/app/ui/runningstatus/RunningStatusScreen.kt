@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -176,7 +176,11 @@ private fun androidx.compose.foundation.lazy.LazyListScope.stopSection(
 ) {
     if (stops.isEmpty()) return
     item(key = "header_$title") { SectionTitle(title) }
-    items(stops, key = { "${title}_${it.stationCode}" }) { stop -> StopRow(stop) }
+    // The index is part of the key because a route can list the same station twice (a train that
+    // reverses at a junction, say) and LazyColumn crashes on duplicate keys.
+    itemsIndexed(stops, key = { index, stop -> "${title}_${index}_${stop.stationCode}" }) { _, stop ->
+        StopRow(stop)
+    }
 }
 
 @Composable
